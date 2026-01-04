@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "schoolName": "Om Shanti English Medium School",
+    "yearbook": {
+      "title": "OSEM",
+      "subtitle": "Grade 12th • 2025",
+      "year": 2025,
+      "batch": "Grade 12th"
+    }
+  },
+  "chapters": [
+    {
+      "type": "chapter",
+      "chapterTitle": "Principal's Desk",
+      "text": "To the graduating class of 2025: As you step out from Om Shanti English Medium School, remember that education is not just about books, but about character. Shine bright!",
+      "imageKeyword": "library_architecture",
+      "order": 1
+    },
+    {
+      "type": "chapter",
+      "layout": "full-image",
+      "chapterTitle": "Class of 2025",
+      "text": "A batch full of dreamers.",
+      "imageKeyword": "group_friends_happy",
+      "order": 2
+    },
+    {
+      "type": "chapter",
+      "chapterTitle": "Cultural Echoes",
+      "text": "The stage was our canvas. From the annual day dances to the back-bench drumming sessions, our rhythm was unique and unstoppable.",
+      "imageKeyword": "concert_stage_lights",
+      "order": 3
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "name": "Aarav Patel",
+      "quote": "Don't watch the clock; do what it does. Keep going. I'll miss the canteen samosas the most!",
+      "imageKeyword": "portrait_man_glasses",
+      "imageUrl": "",
+      "futureGoal": "Engineer",
+      "nickname": "",
+      "memorable": "Canteen samosas"
+    },
+    {
+      "id": 2,
+      "name": "Diya Sharma",
+      "quote": "Happiness can be found even in the darkest of times, if one only remembers to turn on the light.",
+      "imageKeyword": "portrait_woman_smile",
+      "imageUrl": "",
+      "futureGoal": "Surgeon",
+      "nickname": "",
+      "memorable": ""
+    },
+    {
+      "id": 3,
+      "name": "Rohan Gupta",
+      "quote": "I came, I saw, I forgot my homework. Thanks to OSEM for tolerating my jokes for 12 years!",
+      "imageKeyword": "portrait_man_laughing",
+      "imageUrl": "",
+      "futureGoal": "",
+      "nickname": "The Joker",
+      "memorable": "Making everyone laugh"
+    },
+    {
+      "id": 4,
+      "name": "Ananya Singh",
+      "quote": "The future belongs to those who believe in the beauty of their dreams. OSEM, you were a dream come true.",
+      "imageKeyword": "portrait_woman_art",
+      "imageUrl": "",
+      "futureGoal": "Artist",
+      "nickname": "",
+      "memorable": ""
+    },
+    {
+      "id": 5,
+      "name": "Arjun Mehta",
+      "quote": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+      "imageKeyword": "portrait_man_sports",
+      "imageUrl": "",
+      "futureGoal": "Athlete",
+      "nickname": "Champ",
+      "memorable": "Sports Day victories"
+    },
+    {
+      "id": 6,
+      "name": "Priya Verma",
+      "quote": "Life is 10% what happens to you and 90% how you react to it. OSEM taught me resilience.",
+      "imageKeyword": "portrait_woman_books",
+      "imageUrl": "",
+      "futureGoal": "Writer",
+      "nickname": "",
+      "memorable": "Library sessions"
+    },
+    {
+      "id": 7,
+      "name": "Kabir Khan",
+      "quote": "In the middle of difficulty lies opportunity. Thank you OSEM for every challenge!",
+      "imageKeyword": "portrait_man_determined",
+      "imageUrl": "",
+      "futureGoal": "Entrepreneur",
+      "nickname": "",
+      "memorable": ""
+    },
+    {
+      "id": 8,
+      "name": "Ishita Joshi",
+      "quote": "Be yourself; everyone else is already taken. OSEM gave me the confidence to be me.",
+      "imageKeyword": "portrait_woman_confident",
+      "imageUrl": "",
+      "futureGoal": "Fashion Designer",
+      "nickname": "",
+      "memorable": ""
+    },
+    {
+      "id": 9,
+      "name": "Aditya Rao",
+      "quote": "The only way to do great work is to love what you do. Thanks OSEM for showing me my passion!",
+      "imageKeyword": "portrait_man_tech",
+      "imageUrl": "",
+      "futureGoal": "Software Developer",
+      "nickname": "Tech Guru",
+      "memorable": "Coding club"
+    },
+    {
+      "id": 10,
+      "name": "Tanvi Desai",
+      "quote": "Education is the passport to the future. OSEM stamped mine with excellence!",
+      "imageKeyword": "portrait_woman_graduation",
+      "imageUrl": "",
+      "futureGoal": "Teacher",
+      "nickname": "",
+      "memorable": ""
+    }
+  ],
+  "farewell": {
+    "type": "chapter",
+    "chapterTitle": "Farewell",
+    "text": "It's not a goodbye, it's a 'see you later'. As we toss our caps, we carry OSEM in our hearts forever. Here's to new beginnings!",
+    "imageKeyword": "graduation_sunset",
+    "order": 999
+  },
+  "instructions": {
+    "howToAddStudents": "To add more students, copy the student object template and fill in the details. Each student should have a unique id.",
+    "studentTemplate": {
+      "id": 0,
+      "name": "Student Full Name",
+      "quote": "Their memorable quote or message",
+      "imageKeyword": "portrait_description_for_image",
+      "imageUrl": "path/to/actual/photo.jpg (optional)",
+      "futureGoal": "Career aspiration (optional)",
+      "nickname": "School nickname (optional)",
+      "memorable": "Most memorable moment (optional)"
+    },
+    "imageNotes": {
+      "imageKeyword": "Used to generate placeholder images from Picsum. Describe the type of portrait (e.g., 'portrait_woman_smile', 'portrait_man_glasses')",
+      "imageUrl": "Use this field to provide direct URL or path to actual student photo. If provided, this takes priority over imageKeyword"
+    }
+  }
+}
