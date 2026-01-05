@@ -111,13 +111,13 @@ export const Home: React.FC<HomeProps> = ({ onOpenBook }) => {
           </div>
 
           {/* Emblem with Enhanced Animation */}
-          <div className="mb-8 opacity-0 animate-[fadeIn_1s_ease-out_0.6s_forwards]">
+          <div className="mb-6 opacity-0 animate-[fadeIn_1s_ease-out_0.6s_forwards]">
             <div className="relative group cursor-default">
                 <div className="absolute inset-0 bg-[#cfaa68] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/3203/3203061.png"
                   alt="OSEM Emblem"
-                  className="w-48 h-48 md:w-64 md:h-64 object-contain mx-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] filter sepia-[0.5] brightness-110 hover:scale-110 transition-transform duration-700 hover:rotate-6"
+                  className="w-36 h-36 md:w-64 md:h-64 object-contain mx-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] filter sepia-[0.5] brightness-110 hover:scale-110 transition-transform duration-700 hover:rotate-6"
                 />
             </div>
           </div>
@@ -137,47 +137,47 @@ export const Home: React.FC<HomeProps> = ({ onOpenBook }) => {
           </div>
 
           {/* Welcome Message */}
-          <div className="mt-12 max-w-2xl px-6 opacity-0 animate-[fadeIn_1s_ease-out_1s_forwards]">
-            <p className="font-['Crimson_Pro'] text-lg md:text-xl text-[#d4c5b0] leading-relaxed mb-4">
+          <div className="mt-8 max-w-2xl px-4 opacity-0 animate-[fadeIn_1s_ease-out_1s_forwards]">
+            <p className="font-['Crimson_Pro'] text-base md:text-xl text-[#d4c5b0] leading-relaxed mb-3">
               "Within these digital pages lies the story of our journey—a tapestry woven with laughter,
               tears, triumphs, and the bonds that will last a lifetime."
             </p>
-            <p className="font-['Crimson_Pro'] text-base text-[#8a6b4e] italic">
+            <p className="font-['Crimson_Pro'] text-sm md:text-base text-[#8a6b4e] italic">
               — The Class of 2025
             </p>
           </div>
 
           {/* CTA Button */}
-          <div className="mt-12 w-full max-w-md opacity-0 animate-[fadeIn_1s_ease-out_1.2s_forwards]">
-            <div className="bg-black/20 p-8 rounded-xl backdrop-blur-sm border border-[#cfaa68]/10 hover:border-[#cfaa68]/30 transition-colors duration-500">
+          <div className="mt-8 w-full max-w-xs mx-auto opacity-0 animate-[fadeIn_1s_ease-out_1.2s_forwards]">
+            <div className="bg-black/20 p-6 rounded-xl backdrop-blur-sm border border-[#cfaa68]/10 hover:border-[#cfaa68]/30 transition-colors duration-500">
                <button
                  onClick={handleOpen}
                  className={`
-                    group relative w-full px-8 py-4 bg-transparent overflow-hidden rounded-sm
+                    group relative w-full px-6 py-3 bg-transparent overflow-hidden rounded-sm
                     border-2 border-[#cfaa68] transition-all duration-300
                     hover:shadow-[0_0_30px_rgba(207,170,104,0.3)]
                     active:scale-95
                  `}
                >
                   <div className="absolute inset-0 w-0 bg-[#cfaa68] transition-all duration-[400ms] ease-out group-hover:w-full opacity-10"></div>
-                  <span className="relative font-['Cinzel'] text-xl font-bold tracking-widest text-[#cfaa68] group-hover:text-[#ffeebb] flex items-center justify-center gap-3">
+                  <span className="relative font-['Cinzel'] text-lg md:text-xl font-bold tracking-widest text-[#cfaa68] group-hover:text-[#ffeebb] flex items-center justify-center gap-2">
                     Open Yearbook
-                    <span className="text-2xl group-hover:translate-x-2 transition-transform duration-300">→</span>
+                    <span className="text-xl group-hover:translate-x-2 transition-transform duration-300">→</span>
                   </span>
                </button>
 
-               <p className="mt-6 text-[#8a6b4e] text-xs font-['Cinzel'] tracking-wider opacity-60">
+               <p className="mt-4 text-[#8a6b4e] text-[0.65rem] md:text-xs font-['Cinzel'] tracking-wider opacity-60">
                  Relive the memories • {yearbookStory?.pages.length || 0} pages of nostalgia
                </p>
             </div>
           </div>
 
           {/* Scroll Indicator */}
-          <div className="mt-16 opacity-0 animate-[fadeIn_1s_ease-out_1.4s_forwards]">
+          <div className="mt-12 opacity-0 animate-[fadeIn_1s_ease-out_1.4s_forwards]">
             <div className="flex flex-col items-center gap-2 animate-bounce">
-              <p className="text-[#8a6b4e] text-xs font-['Cinzel'] tracking-widest uppercase">Discover More</p>
-              <div className="w-6 h-10 border-2 border-[#cfaa68]/30 rounded-full flex items-start justify-center p-2">
-                <div className="w-1 h-2 bg-[#cfaa68] rounded-full animate-[scrollDown_1.5s_ease-in-out_infinite]"></div>
+              <p className="text-[#8a6b4e] text-[0.6rem] md:text-xs font-['Cinzel'] tracking-widest uppercase">Discover More</p>
+              <div className="w-5 h-8 border-2 border-[#cfaa68]/30 rounded-full flex items-start justify-center p-1">
+                <div className="w-1 h-1 bg-[#cfaa68] rounded-full animate-[scrollDown_1.5s_ease-in-out_infinite]"></div>
               </div>
             </div>
           </div>

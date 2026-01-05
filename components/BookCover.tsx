@@ -29,16 +29,16 @@ export const BookCover: React.FC<BookCoverProps> = ({ title, author, onOpen, var
       <div className="absolute inset-8 border border-[#cfaa68] opacity-20 rounded-sm pointer-events-none"></div>
 
       {/* Corners */}
-      <div className="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4 border-[#cfaa68] rounded-tl-lg"></div>
-      <div className="absolute top-4 right-4 w-12 h-12 border-t-4 border-r-4 border-[#cfaa68] rounded-tr-lg"></div>
-      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-4 border-l-4 border-[#cfaa68] rounded-bl-lg"></div>
-      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-4 border-r-4 border-[#cfaa68] rounded-br-lg"></div>
+      <div className="absolute top-3 left-3 w-8 h-8 border-t-4 border-l-4 border-[#cfaa68] rounded-tl-lg"></div>
+      <div className="absolute top-3 right-3 w-8 h-8 border-t-4 border-r-4 border-[#cfaa68] rounded-tr-lg"></div>
+      <div className="absolute bottom-3 left-3 w-8 h-8 border-b-4 border-l-4 border-[#cfaa68] rounded-bl-lg"></div>
+      <div className="absolute bottom-3 right-3 w-8 h-8 border-b-4 border-r-4 border-[#cfaa68] rounded-br-lg"></div>
 
       {isFront ? (
-        <div className="z-10 text-center p-8 flex flex-col items-center h-full justify-between py-16 transform translate-z-[2px]">
+        <div className="z-10 text-center p-4 flex flex-col items-center h-full justify-between py-8 transform translate-z-[2px]">
           {/* Top Crest */}
-          <div className="w-20 h-20 rounded-full bg-[#2c1810] border-2 border-[#cfaa68] flex items-center justify-center shadow-lg mb-4">
-             <svg className="w-10 h-10 text-[#cfaa68]" fill="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 rounded-full bg-[#2c1810] border-2 border-[#cfaa68] flex items-center justify-center shadow-lg mb-2">
+             <svg className="w-8 h-8 text-[#cfaa68]" fill="currentColor" viewBox="0 0 24 24">
                <path d="M12 2L4 7v6.5c0 4.42 3.34 8.05 7.67 8.95L12 22.5l.33-.05C16.66 21.55 20 17.92 20 13.5V7l-8-5zm0 2.18l6 3.75v5.57c0 3.55-2.53 6.49-6 7.16-3.47-.67-6-3.61-6-7.16V7.93l6-3.75z"/>
                <path d="M12 8l-3 3 3 3 3-3-3-3z"/>
              </svg>
@@ -49,13 +49,13 @@ export const BookCover: React.FC<BookCoverProps> = ({ title, author, onOpen, var
               Om Shanti English Medium School
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-['Cinzel'] font-bold text-[#e8d5b5] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-7xl font-['Cinzel'] font-bold text-[#e8d5b5] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-tighter leading-none">
               {title}
             </h1>
             
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#cfaa68] to-transparent mx-auto opacity-80"></div>
             
-            <p className="text-xl font-['Playfair_Display'] text-[#cfaa68] italic tracking-widest">
+            <p className="text-base md:text-xl font-['Playfair_Display'] text-[#cfaa68] italic tracking-widest">
               {author}
             </p>
           </div>
@@ -65,10 +65,10 @@ export const BookCover: React.FC<BookCoverProps> = ({ title, author, onOpen, var
           </div>
         </div>
       ) : (
-         <div className="z-10 text-center flex flex-col items-center justify-between h-full py-16 px-8">
+         <div className="z-10 text-center flex flex-col items-center justify-between h-full py-8 px-4">
             <div className="flex-grow flex flex-col items-center justify-center">
-              <div className="w-16 h-16 rounded-full border border-[#cfaa68] flex items-center justify-center opacity-50 mb-4">
-                 <svg className="w-8 h-8 text-[#cfaa68]" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 rounded-full border border-[#cfaa68] flex items-center justify-center opacity-50 mb-3">
+                 <svg className="w-6 h-6 text-[#cfaa68]" fill="currentColor" viewBox="0 0 24 24">
                    <path d="M12 2L4 7v6.5c0 4.42 3.34 8.05 7.67 8.95L12 22.5l.33-.05C16.66 21.55 20 17.92 20 13.5V7l-8-5zm0 2.18l6 3.75v5.57c0 3.55-2.53 6.49-6 7.16-3.47-.67-6-3.61-6-7.16V7.93l6-3.75z"/>
                    <path d="M12 8l-3 3 3 3 3-3-3-3z"/>
                  </svg>

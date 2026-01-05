@@ -65,7 +65,7 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
         </button>
       </div>
 
-      <div className={`absolute bottom-10 flex gap-8 z-50 items-center transition-all duration-1000 delay-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className={`absolute bottom-4 flex flex-col sm:flex-row gap-3 sm:gap-8 z-50 items-center transition-all duration-1000 delay-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
          <button 
            onClick={handlePrev}
            disabled={currentPageIndex === 0}
@@ -88,16 +88,16 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
       </div>
 
       {/* 3D Scene Container */}
-      {/* 
+      {/*
          Perspective: 1500px provides a natural view.
          We rotate the entire book slightly (-5deg) to show the thickness/3D effect of the pages on the right side.
       */}
-      <div 
+      <div
         className={`
-            relative w-[90vw] h-[55vh] md:w-[800px] md:h-[600px] lg:w-[1000px] lg:h-[700px] 
-            [perspective:1500px] 
+            relative w-[95vw] h-[70vh] md:w-[800px] md:h-[600px] lg:w-[1000px] lg:h-[700px]
+            [perspective:1500px]
             transition-all duration-[1200ms] cubic-bezier(0.19, 1, 0.22, 1)
-            ${animateIn ? 'scale-100 opacity-100 translate-y-0 rotate-0' : 'scale-50 opacity-0 translate-y-48 rotate-x-12'}
+            ${animateIn ? 'scale-100 opacity-100 translate-y-0' : 'scale-100 opacity-0 translate-y-4'}
         `}
       >
         
@@ -228,7 +228,7 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
         
         {/* Realistic Book Shadow on Table */}
         <div className={`
-            absolute top-[98%] left-[2%] right-[2%] h-12 bg-black/60 blur-2xl rounded-[100%] 
+            absolute top-[98%] left-[2%] right-[2%] h-12 bg-black/60 blur-2xl rounded-[100%]
             transition-all duration-1200 delay-200 transform translate-z-[-60px]
             ${animateIn ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
         `}></div>
