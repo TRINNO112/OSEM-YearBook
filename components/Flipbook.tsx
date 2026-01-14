@@ -12,7 +12,7 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   // Sheet 1: Front = Page 1, Back = Page 2
   // ...
   
-  const totalSheets = Math.ceil(story.pages.length / 2) + 2; 
+  const totalSheets = Math.ceil(story.pages.length / 2) + 1; 
   const THICKNESS = 4;
 
   const handleNext = () => {

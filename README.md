@@ -190,7 +190,7 @@ transform: `translate3d(0,0,${zOffset}px) rotateY(${rotation}deg)`
 
 ### 6. Image Loading System
 
-Images are dynamically loaded from **Picsum Photos API**:
+Images can be loaded from **two sources**:
 
 ```typescript
 const imageSource = data.imageUrl
@@ -200,10 +200,22 @@ const imageSource = data.imageUrl
     : null;
 ```
 
-**Image Sources:**
-1. **Direct URL**: If `imageUrl` is provided, use it directly
-2. **Keyword Seed**: If `imageKeyword` is provided, generate from Picsum
+**Image Sources (Priority Order):**
+1. **Local Images**: If `imageUrl` is provided, use it directly (e.g., `/images/students/john-doe.jpg`)
+2. **Picsum Placeholder**: If `imageKeyword` is provided, generate from Picsum Photos API
 3. **Fallback**: No image displayed
+
+**Using Local Images:**
+- Place student photos in `public/images/students/`
+- Place chapter images in `public/images/chapters/`
+- Update `imageUrl` in `data/yearbook-data.json`:
+  ```json
+  {
+    "name": "John Doe",
+    "imageUrl": "/images/students/john-doe.jpg"
+  }
+  ```
+- See `public/images/README.md` for detailed instructions
 
 **Preloading (Flipbook.tsx:40-47):**
 ```typescript
@@ -490,11 +502,11 @@ Originally intended for AI story generation. Currently throws error if called. C
 
 ## Current Limitations
 
-1. **Static Data**: All content hardcoded in `Home.tsx`
-2. **Limited Scale**: Only 8 pages defined (need 65+ for all students)
+1. ~~**Static Data**: All content hardcoded in `Home.tsx`~~ ✅ **FIXED**: Now uses JSON data file
+2. **Limited Scale**: Currently 10 student profiles (can easily scale to 65+)
 3. **No Data Persistence**: No backend/database
-4. **Manual Updates**: Requires code changes to add students
-5. **Fixed Images**: Random images from Picsum (not actual student photos)
+4. ~~**Manual Updates**: Requires code changes to add students~~ ✅ **FIXED**: Edit JSON file only
+5. ~~**Fixed Images**: Random images from Picsum (not actual student photos)~~ ✅ **FIXED**: Support for local images added
 
 ---
 
@@ -502,20 +514,47 @@ Originally intended for AI story generation. Currently throws error if called. C
 
 To add students or modify content:
 
-1. Edit `components/Home.tsx`
-2. Locate `OSEM_YEARBOOK` object (lines 8-66)
-3. Add pages to the `pages` array:
-   ```typescript
+### Adding Students
+
+1. Open `data/yearbook-data.json`
+2. Add a new student object to the `students` array:
+   ```json
    {
-     type: 'profile',
-     studentName: "New Student",
-     chapterTitle: "Student Profile",
-     text: "Student quote or message",
-     imageKeyword: "portrait_description"
+     "id": 11,
+     "name": "New Student Name",
+     "quote": "Their memorable quote or message",
+     "imageKeyword": "portrait_description",
+     "imageUrl": "/images/students/student-name.jpg",
+     "futureGoal": "Career aspiration (optional)",
+     "nickname": "Nickname (optional)",
+     "memorable": "Most memorable moment (optional)"
+   }
+   ```
+3. If using a local photo:
+   - Place the photo in `public/images/students/`
+   - Set `imageUrl` to `/images/students/filename.jpg`
+4. If using placeholder images:
+   - Leave `imageUrl` as `""`
+   - Set `imageKeyword` to a descriptive phrase (e.g., `"portrait_woman_smile"`)
+
+### Adding Chapters
+
+1. Open `data/yearbook-data.json`
+2. Add a new chapter to the `chapters` array:
+   ```json
+   {
+     "type": "chapter",
+     "chapterTitle": "Chapter Title",
+     "text": "Chapter content...",
+     "imageKeyword": "chapter_description",
+     "imageUrl": "/images/chapters/chapter-image.jpg",
+     "order": 4
    }
    ```
 
-**Note:** This process will be simplified once JSON data structure is implemented.
+### Using Local Images
+
+See `public/images/README.md` for detailed instructions on adding and using local images.
 
 ---
 

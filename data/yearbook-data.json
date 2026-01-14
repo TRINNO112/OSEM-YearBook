@@ -141,6 +141,14 @@
     "imageKeyword": "graduation_sunset",
     "order": 999
   },
+  "credits": {
+    "type": "chapter",
+    "chapterTitle": "Credits",
+    "text": "This digital yearbook was crafted with care and creativity by Trinno Asphalt. May these memories inspire future generations.",
+    "imageKeyword": "developer_workspace",
+    "imageUrl": "/images/chapters/Trinno.png",
+    "order": 1000
+  },
   "instructions": {
     "howToAddStudents": "To add more students, copy the student object template and fill in the details. Each student should have a unique id.",
     "studentTemplate": {

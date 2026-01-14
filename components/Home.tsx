@@ -18,7 +18,8 @@ const buildYearbookStory = (): Story => {
       layout: chapter.layout as 'standard' | 'full-image' | undefined,
       chapterTitle: chapter.chapterTitle,
       text: chapter.text,
-      imageKeyword: chapter.imageKeyword
+      imageKeyword: chapter.imageKeyword,
+      imageUrl: chapter.imageUrl || undefined
     });
   });
 
@@ -39,8 +40,20 @@ const buildYearbookStory = (): Story => {
     type: yearbookData.farewell.type as 'chapter',
     chapterTitle: yearbookData.farewell.chapterTitle,
     text: yearbookData.farewell.text,
-    imageKeyword: yearbookData.farewell.imageKeyword
+    imageKeyword: yearbookData.farewell.imageKeyword,
+    imageUrl: yearbookData.farewell.imageUrl || undefined
   });
+
+  // Add credits page at the very end
+  if (yearbookData.credits) {
+    pages.push({
+      type: yearbookData.credits.type as 'chapter',
+      chapterTitle: yearbookData.credits.chapterTitle,
+      text: yearbookData.credits.text,
+      imageKeyword: yearbookData.credits.imageKeyword,
+      imageUrl: yearbookData.credits.imageUrl || undefined
+    });
+  }
 
   return {
     title: yearbookData.metadata.yearbook.title,
