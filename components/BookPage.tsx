@@ -1,5 +1,6 @@
 import React from 'react';
 import { StoryPage } from '../types';
+import { resolveImagePath } from '../utils/imageUtils';
 
 interface BookPageProps {
   pageNumber: number;
@@ -10,11 +11,11 @@ interface BookPageProps {
 export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) => {
   const isProfile = data.type === 'profile';
   const isFullImage = data.layout === 'full-image';
-  
+
   // Resolve image source: prefer direct URL, fallback to keyword, then placeholder
-  const imageSource = data.imageUrl 
-    ? data.imageUrl 
-    : data.imageKeyword 
+  const imageSource = data.imageUrl
+    ? resolveImagePath(data.imageUrl)
+    : data.imageKeyword
         ? `https://picsum.photos/seed/${data.imageKeyword + pageNumber}/600/800`
         : null;
 

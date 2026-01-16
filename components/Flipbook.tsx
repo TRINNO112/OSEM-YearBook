@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FlipbookProps } from '../types';
 import { BookCover } from './BookCover';
 import { BookPage } from './BookPage';
+import { resolveImagePath } from '../utils/imageUtils';
 
 export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -39,8 +40,11 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   // Preload images
   useEffect(() => {
     story.pages.forEach((page, i) => {
-        if(page.imageKeyword) {
-            const img = new Image();
+        const img = new Image();
+        if(page.imageUrl) {
+            const src = resolveImagePath(page.imageUrl);
+            if(src) img.src = src;
+        } else if(page.imageKeyword) {
             img.src = `https://picsum.photos/seed/${page.imageKeyword + (i+1)}/600/400`;
         }
     })
