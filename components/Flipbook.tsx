@@ -7,7 +7,24 @@ import { resolveImagePath } from '../utils/imageUtils';
 export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [animateIn, setAnimateIn] = useState(false); // State for entrance animation
-  
+
+  // Audio Ref
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+
+  // Initialize Audio
+  useEffect(() => {
+    // You'll need to add a 'page-flip.mp3' file to your public folder
+    audioRef.current = new Audio(resolveImagePath('/sounds/page-flip.mp3') || '');
+    audioRef.current.volume = 0.5;
+  }, []);
+
+  const playFlipSound = () => {
+    if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(e => console.log("Audio play failed (user interaction needed first)", e));
+    }
+  };
+
   // LOGIC:
   // Sheet 0: Front = Cover, Back = Page 0
   // Sheet 1: Front = Page 1, Back = Page 2
@@ -17,16 +34,19 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   const THICKNESS = 4;
 
   const handleNext = () => {
-    if (currentPageIndex < totalSheets - 1) {
+    if (currentPageIndex < totalSheets) {
       setCurrentPageIndex(prev => prev + 1);
+      playFlipSound();
     }
   };
 
   const handlePrev = () => {
     if (currentPageIndex > 0) {
       setCurrentPageIndex(prev => prev - 1);
+      playFlipSound();
     }
   };
+
 
   // Trigger entrance animation on mount
   useEffect(() => {
@@ -82,9 +102,9 @@ export const Flipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
             PAGE {currentPageIndex} OF {totalSheets - 1}
          </div>
 
-         <button 
+         <button
            onClick={handleNext}
-           disabled={currentPageIndex === totalSheets - 1}
+           disabled={currentPageIndex === totalSheets}
            className="px-6 py-2 rounded-full border border-white/20 bg-black/40 text-white hover:bg-[#cfaa68] hover:text-black hover:border-[#cfaa68] disabled:opacity-30 disabled:hover:bg-black/40 disabled:hover:text-white transition-all font-['Cinzel'] tracking-widest"
          >
             Next
