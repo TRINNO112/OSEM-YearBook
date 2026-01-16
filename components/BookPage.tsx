@@ -31,32 +31,14 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
       {/* BACKGROUND TEXTURES & ATMOSPHERE */}
       {/* ============================================= */}
 
-      {/* Base Paper Texture (Subtle Noise) */}
+      {/* Custom Vintage Paper Background */}
       <div
-        className="absolute inset-0 opacity-40 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
-        }}
-      />
-
-      {/* Leather Texture from Cover (Low Opacity) */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply filter contrast-150"
-        style={{
-          backgroundImage: `url('https://www.transparenttextures.com/patterns/leather.png')`,
-          backgroundSize: '300px'
-        }}
-      />
-
-      {/* Old Paper Stains/Aging Effect */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,#d4c4a8_100%)]" />
-
-      {/* Vertical faint lines (Notebook effect) - Very subtle to not interfere with text */}
-      <div
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(90deg, transparent 95%, #000 95%)`,
-          backgroundSize: '20px 100%'
+          backgroundImage: `url(${resolveImagePath('/images/chapters/page.png')})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 1
         }}
       />
 
@@ -90,7 +72,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
            <span className="font-['Cinzel'] text-xs md:text-sm text-[#8a6b4e] tracking-[0.2em] uppercase font-bold">
              {data.chapterTitle || (isProfile ? 'Class of 2025' : `Chapter ${pageNumber}`)}
            </span>
-           <span className="font-['Cinzel'] text-[#d4af37] font-bold text-lg md:text-xl transform translate-y-1 drop-shadow-sm">
+           <span className="font-['Caveat'] text-[#d4af37] font-bold text-2xl md:text-3xl transform translate-y-1 drop-shadow-sm">
              {pageNumber}
            </span>
         </div>
@@ -135,7 +117,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
                 {/* Nickname pill */}
                 {data.nickname && (
                   <div className="mb-6 px-4 py-1 rounded-full border border-[#d4c5b0] bg-[#fdfbf7]/50 inline-block">
-                    <span className="font-['Crimson_Pro'] italic text-[#8a6b4e] text-sm">
+                    <span className="font-['Caveat'] text-[#8a6b4e] text-xl">
                       "{data.nickname}"
                     </span>
                   </div>
@@ -144,7 +126,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
                 {/* Quote / Message */}
                 <div className="relative px-6 max-w-sm mx-auto flex-grow flex flex-col justify-center">
                     <div className="absolute top-0 left-2 text-4xl text-[#d4af37] font-serif opacity-40">"</div>
-                    <p className="font-['Crimson_Pro'] italic text-lg md:text-xl text-[#4a3b32] leading-relaxed">
+                    <p className="font-['Caveat'] text-2xl md:text-3xl text-[#4a3b32] leading-relaxed">
                         {data.text}
                     </p>
                     <div className="absolute bottom-0 right-2 text-4xl text-[#d4af37] font-serif opacity-40 rotate-180">"</div>
@@ -182,7 +164,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
 
                 {/* Caption Area */}
                 <div className="mt-3 text-center border-t border-dotted border-gray-300 pt-3">
-                    <p className="font-['Crimson_Pro'] italic text-base md:text-xl text-[#4a3b32]">
+                    <p className="font-['Caveat'] text-2xl md:text-3xl text-[#4a3b32]">
                         {data.text}
                     </p>
                 </div>
@@ -212,7 +194,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
                    <div className="float-left mr-3 mb-1 font-['Cinzel'] text-5xl text-[#d4af37] leading-[0.8]">
                      {data.text.charAt(0)}
                    </div>
-                   <p className="font-['Crimson_Pro'] text-lg md:text-xl leading-relaxed text-[#2c1810]">
+                   <p className="font-['Caveat'] text-2xl md:text-3xl leading-relaxed text-[#2c1810]">
                      {data.text.slice(1)}
                    </p>
                 </div>
