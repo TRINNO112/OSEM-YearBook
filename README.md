@@ -450,7 +450,7 @@ MIT License - See LICENSE file for details
 - Om Shanti English Medium School
 - Class of 2025
 - All teachers and staff
-- Contributors and developers
+- Contributors (Teachers) and developer (Trinno)
 
 ---
 
