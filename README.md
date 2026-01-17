@@ -2,581 +2,470 @@
 
 <div align="center">
 
-**Interactive 3D Yearbook Application**
+**Interactive 3D Yearbook Application with Mobile Support**
 
 *Om Shanti English Medium School - Grade 12th Batch of 2025*
+
+**Live Demo:** [View on GitHub Pages](https://amitpathak1999.github.io/OSEM-YearBook/)
 
 </div>
 
 ---
 
-## Table of Contents
+## 📖 Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
-- [Project Architecture](#project-architecture)
-- [How It Works](#how-it-works)
+- [Book Structure](#book-structure)
 - [Technology Stack](#technology-stack)
+- [How It Works](#how-it-works)
 - [Setup & Installation](#setup--installation)
+- [Project Architecture](#project-architecture)
 - [Data Structure](#data-structure)
-- [Component Breakdown](#component-breakdown)
+- [Deployment](#deployment)
 - [Future Enhancements](#future-enhancements)
 
 ---
 
-## Overview
+## 🎯 Overview
 
 OSEM Yearbook 2025 is an interactive, 3D digital yearbook application that provides an immersive book-reading experience. The application features realistic page-turning animations, student profiles, and memorable moments from the graduating class.
 
-**Live Demo:** [View in AI Studio](https://ai.studio/apps/drive/1uU3RCCrsjeU69r3nqdgGX6Hpli3FbaJK)
+**Dual Interface System:**
+- **Desktop** (≥768px): Full 3D flipbook with realistic page-turning animation
+- **Mobile** (<768px): Swipe-based single-page view optimized for touch devices
 
 ---
 
-## Features
+## ✨ Features
 
+### Desktop Version (3D Flipbook)
 - **3D Flipbook Animation**: Realistic page-turning with CSS 3D transforms
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Dual Page View**: See left and right pages simultaneously
+- **Visual Effects**: Leather-bound book cover, paper textures, shadows
+- **Smooth Animations**: 1200ms cubic-bezier transitions
+- **Interactive Elements**: Click to turn pages, close book button
+
+### Mobile Version (Touch Optimized)
+- **Swipe Navigation**: Left/right swipe gestures to turn pages
+- **Touch Controls**: Large, accessible navigation buttons
+- **Page Indicators**: Visual progress dots at bottom
+- **Responsive Typography**: Scales perfectly on small screens
+- **Swipe Hints**: Guidance for first-time users
+
+### Common Features
 - **Student Profiles**: Individual pages for each graduating student
 - **Multiple Page Layouts**:
   - Student Profile Layout (photo + quote)
   - Full Image Layout (large photo with caption)
   - Standard Chapter Layout (text + illustration)
-- **Dynamic Image Loading**: Images generated based on keywords
-- **Elegant Typography**: Custom fonts (Cinzel, Playfair Display, Crimson Pro)
-- **Paper Texture Effects**: Realistic book appearance with texture overlays
-- **Smooth Animations**: Entrance/exit animations with easing
+- **Dynamic Image Loading**: Images from keywords or direct URLs
+- **Elegant Typography**: Custom fonts (Cinzel, Playfair Display, Caveat, Crimson Pro)
+- **Paper Texture Effects**: Realistic book appearance with overlays
+- **Memorable Quotes**: Each student has a personalized message
 
 ---
 
-## Project Architecture
+## 📚 Book Structure
 
-```
-OSEM YearBook/
-│
-├── index.html              # Entry point with Tailwind CDN & fonts
-├── index.tsx               # React root mount
-├── App.tsx                 # Main application controller
-├── types.ts                # TypeScript type definitions
-├── metadata.json           # Project metadata
-├── vite.config.ts          # Vite configuration
-├── tsconfig.json           # TypeScript configuration
-├── package.json            # Dependencies & scripts
-│
-├── components/
-│   ├── Home.tsx            # Landing page with yearbook data
-│   ├── Flipbook.tsx        # 3D book rendering & page navigation
-│   ├── BookPage.tsx        # Individual page renderer
-│   └── BookCover.tsx       # Front & back cover components
-│
-└── services/
-    └── geminiService.ts    # Deprecated AI service (not used)
-```
+The yearbook follows this flow:
 
----
+### Front Matter
+1. **Cover Page**: OSEM logo with "Grade 12th • 2025"
+2. **Principal's Message**: Inspirational message from school leadership
+3. **Class Photo**: Group photo of all students
+4. **Cultural Memories**: Highlights of events and activities
 
-## How It Works
+### Student Profiles (Alphabetical Order)
+Each student has a dedicated profile page containing:
+- **Name**: Full name of the student
+- **Photo**: Portrait image
+- **Quote**: Personal message or memorable quote
+- **Nickname**: Optional nickname (if applicable)
+- **Future Goals**: Career aspirations
+- **Memorable Moments**: Special memories from school
 
-### 1. Application Flow
+### Back Matter
+1. **Farewell Chapter**: Closing message to the batch
+2. **Credits**: Production credits and acknowledgments
 
-```
-User loads page
-    ↓
-index.html (loads React & Tailwind)
-    ↓
-index.tsx (mounts React app)
-    ↓
-App.tsx (manages view state)
-    ↓
-┌─────────────────┬──────────────────┐
-│   HOME VIEW     │    BOOK VIEW     │
-│   (Home.tsx)    │  (Flipbook.tsx)  │
-└─────────────────┴──────────────────┘
-```
-
-### 2. View Management (App.tsx)
-
-The application has **two main views**:
-
-- **`AppView.HOME`**: Landing page displaying the yearbook cover and "Open Yearbook" button
-- **`AppView.BOOK`**: 3D flipbook view with page navigation
-
-**State Management:**
-```typescript
-const [view, setView] = useState<AppView>(AppView.HOME);
-const [currentStory, setCurrentStory] = useState<Story | null>(null);
-```
-
-**View Transitions:**
-- User clicks "Open Yearbook" → triggers `handleOpenBook()`
-- Passes yearbook data to Flipbook component
-- User clicks "Close Book" → returns to HOME view
-
-### 3. Data Structure (Home.tsx)
-
-All yearbook content is currently **hardcoded** in `Home.tsx` as a `Story` object:
-
-```typescript
-const OSEM_YEARBOOK: Story = {
-  title: "OSEM",
-  author: "Grade 12th • 2025",
-  pages: [
-    {
-      type: 'chapter',
-      chapterTitle: "Principal's Desk",
-      text: "Message content...",
-      imageKeyword: "library_architecture"
-    },
-    {
-      type: 'profile',
-      studentName: "Aarav Patel",
-      text: "Student quote...",
-      imageKeyword: "portrait_man_glasses"
-    },
-    // ... more pages
-  ]
-};
-```
-
-**Current Pages:**
-- 3 Chapter pages (Principal's Desk, Class of 2025, Cultural Echoes)
-- 4 Student Profile pages
-- 1 Farewell page
-- **Total: 8 pages**
-
-### 4. Page Rendering Logic (Flipbook.tsx)
-
-**Sheet Calculation:**
-```typescript
-const totalSheets = Math.ceil(story.pages.length / 2) + 2;
-```
-
-- Each physical sheet has **2 sides** (front & back)
-- Sheet 0: Front = Cover, Back = Page 1
-- Sheet 1: Front = Page 2, Back = Page 3
-- Last Sheet: Front = Last Page, Back = Back Cover
-
-**3D Transformation:**
-```typescript
-transform: `translate3d(0,0,${zOffset}px) rotateY(${rotation}deg)`
-```
-
-- Pages rotate 180° on Y-axis when flipped
-- Z-offset creates physical thickness
-- Stacking order (z-index) creates realistic layering
-
-**Navigation:**
-- `handleNext()`: Flips to next page if available
-- `handlePrev()`: Flips to previous page if available
-- Pages can also be clicked to flip
-
-### 5. Page Layout Types (BookPage.tsx)
-
-**a) Profile Layout (`type: 'profile'`):**
-- Polaroid-style photo frame (rotated -2°)
-- Student name in Cinzel font
-- Quote with decorative quotation marks
-- Signature line
-
-**b) Full Image Layout (`layout: 'full-image'`):**
-- Large photo with border frame
-- Decorative corner accents
-- Caption below image
-
-**c) Standard Chapter Layout (default):**
-- Header with chapter title & page number
-- Image area (if imageKeyword provided)
-- Text content with first-letter styling
-- Footer decoration
-
-### 6. Image Loading System
-
-Images can be loaded from **two sources**:
-
-```typescript
-const imageSource = data.imageUrl
-  ? data.imageUrl
-  : data.imageKeyword
-    ? `https://picsum.photos/seed/${data.imageKeyword + pageNumber}/600/800`
-    : null;
-```
-
-**Image Sources (Priority Order):**
-1. **Local Images**: If `imageUrl` is provided, use it directly (e.g., `/images/students/john-doe.jpg`)
-2. **Picsum Placeholder**: If `imageKeyword` is provided, generate from Picsum Photos API
-3. **Fallback**: No image displayed
-
-**Using Local Images:**
-- Place student photos in `public/images/students/`
-- Place chapter images in `public/images/chapters/`
-- Update `imageUrl` in `data/yearbook-data.json`:
-  ```json
-  {
-    "name": "John Doe",
-    "imageUrl": "/images/students/john-doe.jpg"
-  }
-  ```
-- See `public/images/README.md` for detailed instructions
-
-**Preloading (Flipbook.tsx:40-47):**
-```typescript
-useEffect(() => {
-  story.pages.forEach((page, i) => {
-    if(page.imageKeyword) {
-      const img = new Image();
-      img.src = `https://picsum.photos/seed/${page.imageKeyword + (i+1)}/600/400`;
-    }
-  })
-}, [story]);
+### Sample Student Profile Structure:
+```json
+{
+  "id": 1,
+  "name": "Student Name",
+  "quote": "Personal message or favorite quote",
+  "imageKeyword": "Used to fetch relevant image",
+  "imageUrl": "Direct image path (optional)",
+  "futureGoal": "Career aspiration",
+  "nickname": "Nickname (optional)",
+  "memorable": "Special memory from school"
+}
 ```
 
 ---
 
-## Technology Stack
+## 🛠 Technology Stack
 
-### Core
-- **React 19.2.3** - UI library
-- **TypeScript 5.8.2** - Type safety
-- **Vite 6.2.0** - Build tool & dev server
+### Frontend
+- **React 19.2.3**: UI framework with hooks
+- **TypeScript**: Type safety
+- **Tailwind CSS**: Utility-first styling
+- **Vite**: Build tool and development server
 
-### Styling
-- **Tailwind CSS** (CDN) - Utility-first CSS
-- **Custom Fonts**:
-  - Cinzel - Headers & decorative text
-  - Playfair Display - Titles & italics
-  - Crimson Pro - Body text
-- **CSS 3D Transforms** - Page flipping animations
+### 3D & Animations
+- **CSS 3D Transforms**: Hardware-accelerated page flipping
+- **Tailwind Animations**: Smooth transitions and effects
+- **Cubic-Bezier Curves**: Natural motion timing
 
-### Assets
-- **Picsum Photos** - Dynamic image generation
-- **Unsplash** - Background images
-- **Transparent Textures** - Paper/leather textures
+### Data & Assets
+- **Static JSON**: Yearbook data storage
+- **Assets**: Local images and audio files
+- **Unsplash/Picsum**: Dynamic image generation
 
 ### Development
-- **@vitejs/plugin-react** - React support in Vite
-- **Node.js** - Runtime environment
+- **TypeScript**: Type-safe development
+- **ESLint**: Code quality
+- **GitHub Actions**: CI/CD pipeline
 
 ---
 
-## Setup & Installation
+## 🎮 How It Works
+
+### Desktop 3D Flipbook
+The desktop version uses CSS 3D transforms to create realistic page-turning:
+
+1. **Book Structure**: Multiple sheets with front/back faces
+2. **Page Mapping**: Each sheet shows 2 pages (left/right)
+3. **3D Rotation**: Pages rotate around Y-axis (0deg to -180deg)
+4. **Z-Indexing**: Proper stacking order for authentic look
+5. **Perspective**: 1500px perspective for natural view
+6. **Transform Origin**: Pages rotate from the spine (left edge)
+
+**Animation Flow:**
+```
+User clicks → Audio plays → Page rotates → Z-index updates → Animation completes
+```
+
+### Mobile Swipe Navigation
+The mobile version simplifies the experience:
+
+1. **Single Page View**: Shows one page at a time
+2. **Swipe Detection**: Tracks touch start/end positions
+3. **Threshold Check**: Minimum 50px swipe distance
+4. **Direction Detection**: Left swipe = next, Right swipe = previous
+5. **Animation**: Fade + slide effect (500ms)
+6. **Buttons Fallback**: Navigation buttons always available
+
+**Touch Flow:**
+```
+Touch start → Track position → Touch end → Calculate distance → Check threshold → Navigate
+```
+
+---
+
+## 🚀 Setup & Installation
 
 ### Prerequisites
-- Node.js (v16 or higher recommended)
+- Node.js 18+
 - npm or yarn
 
 ### Installation Steps
 
 1. **Clone the repository**
-   ```bash
-   cd "C:\Users\Amit Pathak\Documents\OSEM YearBook"
-   ```
+```bash
+git clone https://github.com/yourusername/OSEM-YearBook.git
+cd OSEM-YearBook
+```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-3. **Configure environment (optional)**
-   - Set `GEMINI_API_KEY` in `.env.local` if using AI features (currently disabled)
+3. **Run development server**
+```bash
+npm run dev
+```
 
-4. **Run development server**
-   ```bash
-   npm run dev
-   ```
-   - Server starts at `http://localhost:5173` (or next available port)
+4. **Build for production**
+```bash
+npm run build
+```
 
-5. **Build for production**
-   ```bash
-   npm run build
-   ```
-   - Output in `dist/` folder
+5. **Preview production build**
+```bash
+npm run preview
+```
 
-6. **Preview production build**
-   ```bash
-   npm run preview
-   ```
+### Configuration
+
+#### GitHub Pages Setup
+The project is configured for GitHub Pages deployment:
+
+1. **Update `vite.config.ts`:**
+```typescript
+export default defineConfig({
+  base: '/OSEM-YearBook/', // Your repo name
+  plugins: [react()],
+})
+```
+
+2. **GitHub Actions** (`.github/workflows/deploy.yml`):
+   - Automatically deploys on push to main branch
+   - Builds and deploys to gh-pages branch
 
 ---
 
-## Data Structure
+## 🏗 Project Architecture
 
-### Type Definitions (types.ts)
+```
+OSEM-YearBook/
+├── public/
+│   ├── images/
+│   │   ├── chapters/          # Chapter images
+│   │   └── students/          # Student photos
+│   └── sounds/
+│       └── page-flip.mp3      # Page turn audio
+├── src/
+│   ├── components/
+│   │   ├── Home.tsx           # Landing page
+│   │   ├── Flipbook.tsx       # Desktop 3D version
+│   │   ├── MobileFlipbook.tsx # Mobile version
+│   │   ├── BookPage.tsx       # Individual page component
+│   │   └── BookCover.tsx      # Cover design
+│   ├── data/
+│   │   └── yearbook-data.json # All book content
+│   ├── utils/
+│   │   └── imageUtils.ts      # Image path resolution
+│   ├── services/
+│   │   └── geminiService.ts   # AI service (deprecated)
+│   ├── types.ts               # TypeScript interfaces
+│   └── App.tsx                # Main app component
+├── index.html                 # Entry HTML
+├── package.json               # Dependencies
+├── vite.config.ts             # Build configuration
+├── tsconfig.json              # TypeScript config
+└── tailwind.config.js         # Styling config
+```
 
-**AppView Enum:**
+---
+
+## 📊 Data Structure
+
+### Main Structure (`yearbook-data.json`)
+
 ```typescript
-export enum AppView {
-  HOME = 'HOME',
-  BOOK = 'BOOK',
+interface YearbookData {
+  metadata: {
+    schoolName: string;
+    yearbook: {
+      title: string;
+      subtitle: string;
+      year: number;
+      batch: string;
+    }
+  };
+  chapters: Chapter[];      // Front matter chapters
+  students: Student[];      // Student profiles
+  farewell: Chapter;        // Closing chapter
+  credits?: Chapter;        // Optional credits
+}
+
+interface Chapter {
+  type: 'chapter';
+  chapterTitle: string;
+  text: string;
+  imageKeyword?: string;
+  imageUrl?: string;
+  layout?: 'standard' | 'full-image';
+  order?: number;
+}
+
+interface Student {
+  id: number;
+  name: string;
+  quote: string;
+  imageKeyword: string;
+  imageUrl?: string;
+  futureGoal?: string;
+  nickname?: string;
+  memorable?: string;
 }
 ```
 
-**StoryPage Interface:**
-```typescript
-export interface StoryPage {
-  type?: 'chapter' | 'profile';           // Page type
-  layout?: 'standard' | 'full-image';     // Layout style
-  text: string;                            // Main content
-  imageKeyword?: string;                   // Picsum seed keyword
-  imageUrl?: string;                       // Direct image URL
-  chapterTitle?: string;                   // Header title
-  studentName?: string;                    // Student name (profiles only)
-}
-```
+### Component Props
 
-**Story Interface:**
 ```typescript
-export interface Story {
-  title: string;        // Book title
-  author: string;       // Author/subtitle
-  pages: StoryPage[];   // Array of pages
+interface FlipbookProps {
+  story: Story;
+  onClose: () => void;
 }
-```
 
-**FlipbookProps Interface:**
-```typescript
-export interface FlipbookProps {
-  story: Story;         // Yearbook data
-  onClose: () => void;  // Close handler
+interface Story {
+  title: string;
+  author: string;
+  pages: StoryPage[];
+}
+
+interface StoryPage {
+  type?: 'chapter' | 'profile';
+  layout?: 'standard' | 'full-image';
+  text: string;
+  imageKeyword?: string;
+  imageUrl?: string;
+  chapterTitle?: string;
+  studentName?: string;
 }
 ```
 
 ---
 
-## Component Breakdown
+## 📦 Deployment
 
-### 1. App.tsx (Main Controller)
-**Lines: 37 | State Management**
+### GitHub Pages (Recommended)
 
-- Manages application view state (HOME/BOOK)
-- Handles view transitions
-- Passes data between components
+The project uses GitHub Actions for automatic deployment:
 
-**Key Functions:**
-- `handleOpenBook(story)`: Opens flipbook view
-- `handleCloseBook()`: Returns to home view
+1. **Workflow file**: `.github/workflows/deploy.yml`
+2. **Trigger**: Push to main branch
+3. **Process**:
+   - Checks out code
+   - Sets up Node.js
+   - Installs dependencies
+   - Builds project
+   - Deploys to gh-pages branch
+4. **Result**: Site available at `https://yourusername.github.io/OSEM-YearBook/`
 
----
+### Manual Deployment
 
-### 2. Home.tsx (Landing Page)
-**Lines: 158 | Data Source**
+```bash
+# Build the project
+npm run build
 
-- Displays landing page with school emblem
-- Contains **HARDCODED** yearbook data (lines 8-66)
-- Animated background with floating particles
-- "Open Yearbook" button
-
-**Current Limitation:**
-All 8 pages are manually defined here. For 65 students, this needs to be refactored to use **JSON data file**.
-
----
-
-### 3. Flipbook.tsx (3D Book Renderer)
-**Lines: 240 | Core Animation Engine**
-
-**Key Features:**
-- 3D page flipping with CSS transforms
-- Sheet calculation & mapping
-- Navigation controls (Prev/Next/Click)
-- Entrance animations
-- Image preloading
-
-**Important Constants:**
-```typescript
-const totalSheets = Math.ceil(story.pages.length / 2) + 2;
-const THICKNESS = 4; // Physical page thickness in pixels
+# Deploy using gh-pages
+npm run deploy
 ```
 
-**Animation States:**
-- `currentPageIndex`: Current visible sheet
-- `animateIn`: Controls entrance animation
-- `isFlipped`: Whether sheet has been turned
+### Netlify/Vercel Alternative
+
+1. **Connect repository** to Netlify/Vercel
+2. **Build command**: `npm run build`
+3. **Publish directory**: `dist`
+4. **Environment variable**: `BASE_URL=/`
 
 ---
 
-### 4. BookPage.tsx (Page Renderer)
-**Lines: 152 | Layout Engine**
+## 🎓 Customization Guide
 
-Renders individual pages based on type:
+### Adding New Students
 
-**Profile Pages:**
-- Polaroid photo frame with hover rotation
-- Student name & decorative divider
-- Quote with quotation marks
-- Signature line
+1. **Add student data** to `data/yearbook-data.json`:
+```json
+{
+  "id": 25,
+  "name": "New Student",
+  "quote": "Favorite quote or message",
+  "imageKeyword": "portrait_student",
+  "futureGoal": "Career aspiration",
+  "nickname": "Nickname (optional)",
+  "memorable": "Special memory"
+}
+```
 
-**Full Image Pages:**
-- Large framed photo
-- Corner accent decorations
-- Caption text
+2. **Add student photo** to `public/images/students/`:
+   - Name format: `student-name.jpg`
+   - Update `imageUrl` in data: `/images/students/student-name.jpg`
 
-**Chapter Pages:**
-- Header with title & page number
-- Image with hover zoom
-- Text with drop-cap first letter
-- Footer decoration (SVG)
+3. **Rebuild and deploy**
 
-**Visual Effects:**
-- Paper texture overlay
-- Binding shadow gradient
-- Sepia/grayscale filters on images
+### Adding New Chapters
 
----
+1. **Add chapter** to `chapters` array in JSON:
+```json
+{
+  "type": "chapter",
+  "chapterTitle": "New Chapter",
+  "text": "Chapter content here",
+  "imageKeyword": "chapter_theme",
+  "layout": "full-image"
+}
+```
 
-### 5. BookCover.tsx (Cover Component)
-**Lines: 79 | Front & Back Covers**
+2. **Add image** to `public/images/chapters/`
+3. **Update order** property for sequencing
 
-**Front Cover:**
-- School crest symbol
-- School name
-- Book title (OSEM)
-- Author line (Grade 12th • 2025)
-- Est. 2025 footer
+### Styling Changes
 
-**Back Cover:**
-- Omega symbol
-- OSEM Yearbook text
-- Class of 2025
-
-**Visual Effects:**
-- Leather texture overlay
-- Multiple golden border frames
-- Decorative corner elements
-- Inset shadow for depth
+Modify Tailwind classes in components:
+- **Colors**: Edit color values in component files
+- **Fonts**: Update font families in Tailwind config
+- **Animations**: Modify transition classes and duration
 
 ---
 
-### 6. geminiService.ts (Deprecated)
-**Lines: 8 | Not Used**
-
-Originally intended for AI story generation. Currently throws error if called. Can be removed or reactivated for future features.
-
----
-
-## Future Enhancements
-
-### Immediate Needs (Recommended)
-
-1. **Refactor to JSON Data Structure**
-   - Move student data to `students.json`
-   - Support 65+ students without code changes
-   - Easier data management
-
-2. **Add Vertical Scrollbar to Home Page**
-   - Enable scrolling on landing page
-   - Better navigation for longer content
+## 🔮 Future Enhancements
 
 ### Planned Features
+- [ ] Student search/filter functionality
+- [ ] Page bookmark system
+- [ ] Social sharing for individual pages
+- [ ] Multi-language support
+- [ ] Video embedded pages
+- [ ] Background music player
+- [ ] Print-friendly version
+- [ ] PDF export functionality
+- [ ] Animated page corners on hover
+- [ ] Virtual signatures page
 
-3. **Search & Filter**
-   - Search students by name
-   - Filter by interests/activities
-   - Jump to specific page
-
-4. **Download/Share**
-   - Export pages as PDF
-   - Share individual profiles
-   - Print-friendly version
-
-5. **Admin Panel**
-   - Add/edit students via UI
-   - Upload photos
-   - Preview changes
-
-6. **Enhanced Profiles**
-   - Multiple photos per student
-   - Yearbook signatures
-   - Contact information
-   - Social media links
-
-7. **Interactive Features**
-   - Comments/messages
-   - Photo galleries
-   - Video messages
-   - QR codes for digital content
-
-8. **Performance Optimization**
-   - Lazy load images
-   - Virtual scrolling for large datasets
-   - Service worker for offline access
+### Technical Improvements
+- [ ] Service worker for offline support
+- [ ] Image optimization and lazy loading
+- [ ] Performance monitoring
+- [ ] Accessibility enhancements (ARIA labels)
+- [ ] Unit tests with Jest/React Testing Library
+- [ ] E2E tests with Cypress/Playwright
 
 ---
 
-## Current Limitations
+## 🤝 Contributing
 
-1. ~~**Static Data**: All content hardcoded in `Home.tsx`~~ ✅ **FIXED**: Now uses JSON data file
-2. **Limited Scale**: Currently 10 student profiles (can easily scale to 65+)
-3. **No Data Persistence**: No backend/database
-4. ~~**Manual Updates**: Requires code changes to add students~~ ✅ **FIXED**: Edit JSON file only
-5. ~~**Fixed Images**: Random images from Picsum (not actual student photos)~~ ✅ **FIXED**: Support for local images added
-
----
-
-## Contributing
-
-To add students or modify content:
-
-### Adding Students
-
-1. Open `data/yearbook-data.json`
-2. Add a new student object to the `students` array:
-   ```json
-   {
-     "id": 11,
-     "name": "New Student Name",
-     "quote": "Their memorable quote or message",
-     "imageKeyword": "portrait_description",
-     "imageUrl": "/images/students/student-name.jpg",
-     "futureGoal": "Career aspiration (optional)",
-     "nickname": "Nickname (optional)",
-     "memorable": "Most memorable moment (optional)"
-   }
-   ```
-3. If using a local photo:
-   - Place the photo in `public/images/students/`
-   - Set `imageUrl` to `/images/students/filename.jpg`
-4. If using placeholder images:
-   - Leave `imageUrl` as `""`
-   - Set `imageKeyword` to a descriptive phrase (e.g., `"portrait_woman_smile"`)
-
-### Adding Chapters
-
-1. Open `data/yearbook-data.json`
-2. Add a new chapter to the `chapters` array:
-   ```json
-   {
-     "type": "chapter",
-     "chapterTitle": "Chapter Title",
-     "text": "Chapter content...",
-     "imageKeyword": "chapter_description",
-     "imageUrl": "/images/chapters/chapter-image.jpg",
-     "order": 4
-   }
-   ```
-
-### Using Local Images
-
-See `public/images/README.md` for detailed instructions on adding and using local images.
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature-name`
+3. Make changes and test
+4. Commit: `git commit -m "Add feature"`
+5. Push: `git push origin feature-name`
+6. Create Pull Request
 
 ---
 
-## Credits
+## 📄 License
 
-**School:** Om Shanti English Medium School
-**Batch:** Grade 12th - 2025
-**Application Type:** Digital Yearbook
-**Framework:** React + TypeScript + Vite
+MIT License - See LICENSE file for details
 
 ---
 
-## License
+## 🙏 Acknowledgments
 
-This project is created for Om Shanti English Medium School.
-
----
-
-## Contact & Support
-
-For issues or questions about this yearbook application, please refer to the project repository or contact the development team.
+- Om Shanti English Medium School
+- Class of 2025
+- All teachers and staff
+- Contributors and developers
 
 ---
 
-**Last Updated:** January 2026
+## 📞 Support
+
+For support or questions:
+- Create an issue on GitHub
+- Contact: none!
+
+---
+
+<div align="center">
+
+**Made with ❤️ for OSEM Class of 2025**
+
+*May your journey ahead be as inspiring as your time here*
+
+</div>
