@@ -10,7 +10,8 @@
       "Bash(npm run deploy:*)",
       "Bash(git branch:*)",
       "Bash(move \"public\\\\images\\\\students\\\\Trinno.png\" \"public\\\\images\\\\chapters\\\\Trinno.png\")",
-      "Bash(mkdir -p .github/workflows)"
+      "Bash(mkdir -p .github/workflows)",
+      "Bash(npm run preview:*)"
     ]
   }
 }

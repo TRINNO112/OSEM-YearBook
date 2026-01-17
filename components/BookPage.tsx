@@ -63,16 +63,16 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
       {/* ============================================= */}
       {/* PAGE CONTENT */}
       {/* ============================================= */}
-      <div className="relative z-10 flex flex-col h-full p-6 md:p-10 lg:p-12 font-serif text-[#2c1810]">
+      <div className="relative z-10 flex flex-col h-full p-4 sm:p-6 md:p-10 lg:p-12 font-serif text-[#2c1810]">"
 
         {/* Header Section */}
         <div className="flex justify-between items-end mb-6 pb-2 border-b-2 border-[#d4c5b0] relative">
            <div className="absolute bottom-[-1px] left-0 w-1/3 h-[1px] bg-[#8a6b4e]" />
 
-           <span className="font-['Cinzel'] text-xs md:text-sm text-[#8a6b4e] tracking-[0.2em] uppercase font-bold">
+           <span className="font-['Cinzel'] text-[0.65rem] sm:text-xs md:text-sm text-[#8a6b4e] tracking-[0.2em] uppercase font-bold">
              {data.chapterTitle || (isProfile ? 'Class of 2025' : `Chapter ${pageNumber}`)}
            </span>
-           <span className="font-['Caveat'] text-[#d4af37] font-bold text-2xl md:text-3xl transform translate-y-1 drop-shadow-sm">
+           <span className="font-['Caveat'] text-[#d4af37] font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl transform translate-y-1 drop-shadow-sm">
              {pageNumber}
            </span>
         </div>
@@ -81,7 +81,7 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
             // --- Student Profile Layout ---
             <div className="flex flex-col items-center h-full text-center">
                 {/* Photo Frame - Vintage Style */}
-                <div className="relative w-40 h-52 mb-6 p-3 bg-white shadow-[0_5px_15px_rgba(0,0,0,0.15)] transform rotate-[-1deg] transition-all duration-500 hover:rotate-0 hover:scale-105 group">
+                <div className="relative w-32 h-40 sm:w-36 sm:h-48 md:w-40 md:h-52 mb-4 sm:mb-6 p-2 sm:p-3 bg-white shadow-[0_5px_15px_rgba(0,0,0,0.15)] transform rotate-[-1deg] transition-all duration-500 hover:rotate-0 hover:scale-105 group">
                     <div className="absolute inset-0 border border-gray-200 pointer-events-none" />
 
                     {/* Inner Image Container */}
@@ -107,11 +107,11 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
                 </div>
 
                 {/* Name - Elegant Typography */}
-                <div className="relative mb-4">
-                  <h2 className="font-['Cinzel'] text-2xl md:text-3xl text-[#3d2a10] font-bold tracking-wide">
+                <div className="relative mb-3 sm:mb-4">
+                  <h2 className="font-['Cinzel'] text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#3d2a10] font-bold tracking-wide">
                       {data.studentName}
                   </h2>
-                  <div className="w-24 h-[2px] mx-auto mt-2 bg-gradient-to-r from-transparent via-[#cfaa68] to-transparent" />
+                  <div className="w-20 sm:w-24 h-[1px] sm:h-[2px] mx-auto mt-1 sm:mt-2 bg-gradient-to-r from-transparent via-[#cfaa68] to-transparent" />
                 </div>
 
                 {/* Nickname pill */}
@@ -124,12 +124,12 @@ export const BookPage: React.FC<BookPageProps> = ({ pageNumber, data, side }) =>
                 )}
 
                 {/* Quote / Message */}
-                <div className="relative px-6 max-w-sm mx-auto flex-grow flex flex-col justify-center">
-                    <div className="absolute top-0 left-2 text-4xl text-[#d4af37] font-serif opacity-40">"</div>
-                    <p className="font-['Caveat'] text-2xl md:text-3xl text-[#4a3b32] leading-relaxed">
+                <div className="relative px-4 sm:px-6 max-w-xs sm:max-w-sm mx-auto flex-grow flex flex-col justify-center">
+                    <div className="absolute top-0 left-2 text-2xl sm:text-3xl md:text-4xl text-[#d4af37] font-serif opacity-40">"</div>
+                    <p className="font-['Caveat'] text-lg sm:text-xl md:text-2xl text-[#4a3b32] leading-relaxed">
                         {data.text}
                     </p>
-                    <div className="absolute bottom-0 right-2 text-4xl text-[#d4af37] font-serif opacity-40 rotate-180">"</div>
+                    <div className="absolute bottom-0 right-2 text-2xl sm:text-3xl md:text-4xl text-[#d4af37] font-serif opacity-40 rotate-180">"</div>
                 </div>
 
                 {/* Footer Signature */}
