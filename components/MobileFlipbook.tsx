@@ -68,7 +68,7 @@ export const MobileFlipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
     const audio = new Audio(resolveImagePath('/sounds/page-flip.mp3') || '');
     audio.volume = 0.2;
     audio.playbackRate = 1.2;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
 
     // Wait for animation to complete
     setTimeout(() => {
@@ -175,319 +175,212 @@ export const MobileFlipbook: React.FC<FlipbookProps> = ({ story, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-br from-[#0d0806] via-[#1a0f0c] to-[#0d0806] overflow-hidden">
-      {/* Ambient Background */}
+    <div className="fixed inset-0 z-50 bg-[#0d0806] overflow-hidden font-['Cinzel']">
+      {/* Ambient Background - Constant for all phases */}
       <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full opacity-15"
-          style={{
-            background: 'radial-gradient(circle, rgba(207,170,104,0.25) 0%, transparent 70%)',
-            animation: 'breathe 6s ease-in-out infinite',
-          }}
-        />
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#cfaa68] via-transparent to-transparent" />
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')]" />
       </div>
 
-      {/* Loading Phase */}
+      {/* 3D Loading Phase */}
       {animationPhase === 'loading' && (
-        <div className="absolute inset-0 flex items-center justify-center z-50">
-          <div className="text-center space-y-6">
-            <div className="relative w-16 h-20 mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513] via-[#654321] to-[#4a2f1a] rounded shadow-xl" style={{
-                animation: 'gentleFloat 2.5s ease-in-out infinite',
-              }}>
-                <div className="absolute inset-2 border border-[#cfaa68]/40 rounded" />
-              </div>
-              <div className="absolute -inset-3 rounded-lg opacity-40" style={{
-                background: 'radial-gradient(circle, rgba(207,170,104,0.2) 0%, transparent 70%)',
-                animation: 'softPulse 2s ease-in-out infinite',
-              }} />
-            </div>
-            <p className="text-[#cfaa68] font-['Cinzel'] text-sm tracking-widest" style={{
-              animation: 'softFade 2s ease-in-out infinite'
-            }}>OPENING YEARBOOK</p>
-          </div>
-        </div>
-      )}
+        <div className="absolute inset-0 flex items-center justify-center z-50 perspective-1000">
+          <div className="relative">
+            {/* 3D Book Construction */}
+            <div className="w-48 h-64 relative preserve-3d animate-book-open">
+              {/* Back Cover */}
+              <div className="absolute inset-0 bg-[#3d2418] rounded-r-lg border-l-4 border-[#2c1a12] shadow-2xl origin-left transform translate-z-[-20px]" />
 
-      {/* Opening Animation */}
-      {animationPhase === 'opening' && (
-        <div className="absolute inset-0 flex items-center justify-center z-50">
-          <div className="w-full h-full bg-gradient-to-br from-[#0d0806] to-[#1a0f0c] opacity-0" style={{
-            animation: 'fadeIn 0.8s ease-out forwards'
-          }} />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center opacity-0" style={{
-              animation: 'fadeInScale 0.8s ease-out 0.2s forwards'
-            }}>
-              <div className="w-32 h-40 bg-gradient-to-br from-[#8B4513] to-[#654321] rounded shadow-2xl mx-auto mb-4" />
-              <h2 className="text-[#cfaa68] font-['Cinzel'] text-lg tracking-[0.2em]">{story.title}</h2>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Page Container with All Effects */}
-      <div className="absolute inset-0" style={{
-        perspective: '1500px',
-        opacity: animationPhase === 'open' ? 1 : 0,
-        transition: 'opacity 0.3s ease',
-      }} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
-        <div className="relative w-full h-full max-w-lg mx-auto px-4 py-4">
-          {/* Header */}
-          {animationPhase === 'open' && (
-            <div className="absolute -top-12 left-0 right-0 z-40 flex items-center justify-between px-4">
-              <button onClick={onClose} className="flex items-center gap-2 px-3 py-2 rounded-full bg-black/30 backdrop-blur-sm border border-[#cfaa68]/20 text-[#e8d5b5] hover:text-[#cfaa68] hover:border-[#cfaa68]/40 transition-all duration-300 active:scale-95">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span className="font-['Cinzel'] text-xs tracking-wider hidden sm:inline">Close</span>
-              </button>
-
-              <div className="text-[#cfaa68] font-['Cinzel'] text-sm tracking-widest">
-                <span className="font-bold">{currentPageIndex + 1}</span>
-                <span className="text-[#8a6b4e] mx-2">of</span>
-                <span>{story.pages.length}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Current Page (Base Layer with Thickness Effect) */}
-          <div className="absolute inset-4" style={{ zIndex: 10 }}>
-            {/* Page thickness - right edge */}
-            <div className="absolute top-0 bottom-0 right-0 w-1 bg-gradient-to-l from-[#3d2418] via-[#5a3825] to-transparent rounded-r-sm" />
-            {/* Page thickness - bottom edge */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-t from-[#3d2418] to-transparent rounded-b-sm" />
-            {/* Page thickness - left edge */}
-            <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-r from-[#3d2418] via-[#5a3825] to-transparent rounded-l-sm" />
-
-            {/* Golden edge highlights */}
-            <div
-              className="absolute inset-0 pointer-events-none rounded"
-              style={{
-                boxShadow: `inset 0 0 0 1px rgba(207,170,104,${getEdgeGlowOpacity() * 0.3}), inset 0 0 10px rgba(207,170,104,${getEdgeGlowOpacity() * 0.2})`,
-                transition: 'box-shadow 0.3s ease',
-              }}
-            />
-
-            {/* Corner fold effect */}
-            <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none" style={{ zIndex: 15 }}>
-              <div
-                className="absolute top-0 right-0 w-full h-full"
-                style={{
-                  background: 'linear-gradient(45deg, transparent 50%, rgba(207,170,104,0.1) 50%)',
-                  clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
-                  transform: isDragging ? 'scale(1.1)' : 'scale(1)',
-                  transition: 'transform 0.3s ease',
-                  opacity: isDragging ? 0.8 : 0.6,
-                }}
-              />
-            </div>
-
-            {/* Paper texture overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none rounded opacity-30"
-              style={{
-                backgroundImage: `url(${resolveImagePath('/images/chapters/page.png')})`,
-                backgroundSize: '200px 200px',
-                backgroundRepeat: 'repeat',
-              }}
-            />
-
-            {/* Page content */}
-            <div className="absolute inset-0">
-              <BookPage
-                pageNumber={currentPageIndex + 1}
-                data={currentPage}
-                side="right"
-              />
-            </div>
-          </div>
-
-          {/* Curling Page Effect for Next */}
-          {turnDirection === 'next' && outgoingPage && (
-            <div
-              className="absolute inset-4 origin-left"
-              style={{
-                transformStyle: 'preserve-3d',
-                transform: isDragging || isPageTurning
-                  ? `rotateY(${getPageRotation()}deg)`
-                  : 'rotateY(0deg)',
-                transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                zIndex: 20,
-              }}
-            >
-              {/* Page thickness for curling page */}
-              <div className="absolute top-0 bottom-0 right-0 w-1 bg-gradient-to-l from-[#3d2418] via-[#5a3825] to-transparent rounded-r-sm" />
-
-              {/* Dynamic page shadow during curl */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(to left, rgba(0,0,0,0.4) 0%, transparent 60%)',
-                  opacity: isPageTurning ? 1 : Math.abs(dragProgress) * 0.7,
-                  transition: isDragging ? 'none' : 'opacity 0.6s ease',
-                }}
-              />
-
-              {/* Enhanced edge glow during curl */}
-              <div
-                className="absolute inset-0 pointer-events-none rounded"
-                style={{
-                  boxShadow: `inset 0 0 0 1px rgba(207,170,104,${Math.max(getEdgeGlowOpacity(), 0.5)}), inset 0 0 20px rgba(207,170,104,${Math.max(getEdgeGlowOpacity() * 0.3, 0.3)})`,
-                }}
-              />
-
-              {/* Paper texture overlay for curling page */}
-              <div
-                className="absolute inset-0 pointer-events-none rounded opacity-30"
-                style={{
-                  backgroundImage: `url(${resolveImagePath('/images/chapters/page.png')})`,
-                  backgroundSize: '200px 200px',
-                  backgroundRepeat: 'repeat',
-                  transform: isDragging ? `translateX(${dragProgress * -10}px)` : 'none',
-                }}
-              />
-
-              <BookPage
-                pageNumber={(outgoingPageIndex || 0) + 1}
-                data={outgoingPage}
-                side="right"
-              />
-            </div>
-          )}
-
-          {/* Curling Page Effect for Previous */}
-          {turnDirection === 'prev' && incomingPage && (
-            <div
-              className="absolute inset-4 origin-right"
-              style={{
-                transformStyle: 'preserve-3d',
-                transform: isDragging || isPageTurning
-                  ? `rotateY(${getPageRotation()}deg)`
-                  : 'rotateY(0deg)',
-                transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                zIndex: 20,
-              }}
-            >
-              {/* Page thickness for curling page */}
-              <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-r from-[#3d2418] via-[#5a3825] to-transparent rounded-l-sm" />
-
-              {/* Dynamic page shadow during curl */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 60%)',
-                  opacity: isPageTurning ? 1 : Math.abs(dragProgress) * 0.7,
-                  transition: isDragging ? 'none' : 'opacity 0.6s ease',
-                }}
-              />
-
-              {/* Enhanced edge glow during curl */}
-              <div
-                className="absolute inset-0 pointer-events-none rounded"
-                style={{
-                  boxShadow: `inset 0 0 0 1px rgba(207,170,104,${Math.max(getEdgeGlowOpacity(), 0.5)}), inset 0 0 20px rgba(207,170,104,${Math.max(getEdgeGlowOpacity() * 0.3, 0.3)})`,
-                }}
-              />
-
-              {/* Paper texture overlay for curling page */}
-              <div
-                className="absolute inset-0 pointer-events-none rounded opacity-30"
-                style={{
-                  backgroundImage: `url(${resolveImagePath('/images/chapters/page.png')})`,
-                  backgroundSize: '200px 200px',
-                  backgroundRepeat: 'repeat',
-                  transform: isDragging ? `translateX(${dragProgress * 10}px)` : 'none',
-                }}
-              />
-
-              <BookPage
-                pageNumber={(incomingPageIndex || 0) + 1}
-                data={incomingPage}
-                side="right"
-              />
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation Footer */}
-      {animationPhase === 'open' && (
-        <div className="absolute bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="max-w-lg mx-auto">
-            {/* Progress Bar */}
-            <div className="mb-4">
-              <div className="h-1 bg-[#2c1810]/50 rounded-full overflow-hidden backdrop-blur-sm">
-                <div className="h-full bg-gradient-to-r from-[#8a6b4e] via-[#cfaa68] to-[#f0d890] rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between gap-4">
-              <button onClick={handlePrev} disabled={currentPageIndex === 0 || isPageTurning} className="group flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#2c1810]/80 to-[#3d2418]/80 backdrop-blur-sm text-[#e8d5b5] border border-[#cfaa68]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 active:scale-95 hover:border-[#cfaa68]/40 hover:shadow-md hover:shadow-[#cfaa68]/10">
-                <svg className="w-5 h-5 opacity-70 transition-all group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span className="font-['Cinzel'] text-xs tracking-widest hidden sm:inline">Previous</span>
-              </button>
-
-              {/* Page Indicators */}
-              <div className="flex items-center gap-1.5">
-                {story.pages.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`transition-all duration-300 ${
-                      index === currentPageIndex
-                        ? 'w-6 h-1 bg-gradient-to-r from-[#cfaa68] to-[#f0d890]'
-                        : 'w-1.5 h-1.5 bg-[#cfaa68]/30'
-                    } rounded-full`}
-                    style={{
-                      boxShadow: index === currentPageIndex ? '0 0 8px rgba(207,170,104,0.6)' : 'none',
-                    }}
-                  />
+              {/* Pages Block */}
+              <div className="absolute inset-y-2 right-2 left-2 bg-[#fdfbf7] shadow-inner origin-left transform translate-z-[-10px] flex flex-col justify-between py-1 px-1">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="h-px w-full bg-gray-200" />
                 ))}
               </div>
 
-              <button onClick={handleNext} disabled={currentPageIndex === story.pages.length - 1 || isPageTurning} className="group flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#3d2418]/80 to-[#2c1810]/80 backdrop-blur-sm text-[#e8d5b5] border border-[#cfaa68]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 active:scale-95 hover:border-[#cfaa68]/40 hover:shadow-md hover:shadow-[#cfaa68]/10">
-                <span className="font-['Cinzel'] text-xs tracking-widest hidden sm:inline">Next</span>
-                <svg className="w-5 h-5 opacity-70 transition-all group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              {/* Front Cover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#5a3825] to-[#3d2418] rounded-r-lg border-l-4 border-[#2c1a12] origin-left shadow-2xl flex items-center justify-center animate-cover-open">
+                <div className="absolute inset-2 border border-[#cfaa68]/40 rounded-r" />
+                <div className="w-20 h-20 rounded-full border-2 border-[#cfaa68]/30 flex items-center justify-center">
+                  <span className="text-4xl text-[#cfaa68]">♔</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Text Reveal */}
+            <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 text-center w-full min-w-[300px]">
+              <h1 className="text-3xl font-bold text-[#cfaa68] tracking-[0.3em] drop-shadow-lg opacity-0 animate-fade-in-up"
+                style={{ animationDelay: '0.5s' }}>
+                OSEM
+              </h1>
+              <p className="text-[#8a6b4e] text-sm tracking-[0.5em] mt-2 opacity-0 animate-fade-in-up"
+                style={{ animationDelay: '1s' }}>
+                YEARBOOK 2025
+              </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Animation Styles */}
+      {/* Main Content Phase */}
+      <div
+        className="absolute inset-0 transition-opacity duration-1000"
+        style={{ opacity: animationPhase === 'open' ? 1 : 0, pointerEvents: animationPhase === 'open' ? 'auto' : 'none' }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Top Header */}
+        <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-40">
+          <div className="text-[#cfaa68]/80 text-[10px] sm:text-xs tracking-widest border border-[#cfaa68]/20 px-2 sm:px-3 py-1 rounded-full bg-black/20 backdrop-blur-sm">
+            PAGE {currentPageIndex + 1} / {story.pages.length}
+          </div>
+          <button
+            onClick={onClose}
+            className="group p-2 rounded-full border border-white/10 hover:border-[#cfaa68]/50 bg-black/20 hover:bg-[#cfaa68]/10 transition-all duration-300"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#e8d5b5] group-hover:text-[#cfaa68] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* SIDE NAVIGATION ARROWS (The "Button" Request) */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-1 sm:px-4 z-50">
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            disabled={currentPageIndex === 0 || isPageTurning}
+            className={`pointer-events-auto p-2 sm:p-4 rounded-full bg-black/30 backdrop-blur-sm border border-[#cfaa68]/20 
+                         text-[#cfaa68] hover:bg-[#cfaa68] hover:text-[#0d0806] hover:scale-110 active:scale-95 
+                         transition-all duration-300 shadow-[0_0_15px_rgba(207,170,104,0.1)] hover:shadow-[0_0_30px_rgba(207,170,104,0.4)]
+                         disabled:opacity-0 disabled:translate-x-[-20px]`}
+          >
+            <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            disabled={currentPageIndex === story.pages.length - 1 || isPageTurning}
+            className={`pointer-events-auto p-2 sm:p-4 rounded-full bg-black/30 backdrop-blur-sm border border-[#cfaa68]/20 
+                         text-[#cfaa68] hover:bg-[#cfaa68] hover:text-[#0d0806] hover:scale-110 active:scale-95 
+                         transition-all duration-300 shadow-[0_0_15px_rgba(207,170,104,0.1)] hover:shadow-[0_0_30px_rgba(207,170,104,0.4)]
+                         disabled:opacity-0 disabled:translate-x-[20px]`}
+          >
+            <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Centered Book Container - MAXIMIZED SIZE */}
+        <div className="absolute inset-0 flex items-center justify-center p-2">
+          <div className="relative w-full max-w-2xl h-[85vh] sm:h-[90vh] aspect-[3/4.5] sm:aspect-[3/4]">
+
+            {/* Previous Page (Left Stack) just for visual thickness */}
+            {currentPageIndex > 0 && (
+              <div className="absolute left-1 top-1 bottom-1 w-2 bg-[#1a0f0c] rounded-l-sm transform -translate-x-full opacity-50" />
+            )}
+
+            {/* Current Page */}
+            <div className="absolute inset-0 bg-[#fdfbf7] rounded-sm shadow-2xl overflow-hidden transform-gpu"
+              style={{
+                transform: isPageTurning ? 'scale(0.98)' : 'scale(1)',
+                transition: 'transform 0.5s ease'
+              }}
+            >
+              {/* Page Texture */}
+              <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/paper.png')]" />
+
+              {/* Content */}
+              <div className="relative w-full h-full">
+                <BookPage pageNumber={currentPageIndex + 1} data={currentPage} side="right" />
+              </div>
+
+              {/* Shine Effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/10 pointer-events-none" />
+            </div>
+
+            {/* Turning Pages (Next/Prev) */}
+            {(turnDirection === 'next' && outgoingPage) && (
+              <div className="absolute inset-0 origin-left z-20"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  animation: 'flipNext 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards'
+                }}
+              >
+                {/* Front of turning page */}
+                <div className="absolute inset-0 bg-[#fdfbf7] backface-hidden">
+                  <BookPage pageNumber={currentPageIndex} data={outgoingPage} side="right" />
+                  <div className="absolute inset-0 bg-gradient-to-l from-black/20 to-transparent" />
+                </div>
+                {/* Back of turning page */}
+                <div className="absolute inset-0 bg-[#e3d0b0] backface-hidden transform rotateY-180 flex items-center justify-center">
+                  <span className="text-[#8a6b4e]/20 font-serif text-6xl italic">Yearbook</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+                </div>
+              </div>
+            )}
+
+            {(turnDirection === 'prev' && incomingPage) && (
+              <div className="absolute inset-0 origin-right z-20"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  animation: 'flipPrev 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards'
+                }}
+              >
+                {/* Front of turning page (actually back bc coming from right) */}
+                <div className="absolute inset-0 bg-[#e3d0b0] backface-hidden transform rotateY-180 flex items-center justify-center">
+                  <span className="text-[#8a6b4e]/20 font-serif text-6xl italic">Yearbook</span>
+                </div>
+                {/* Back of turning page (actually front content) */}
+                <div className="absolute inset-0 bg-[#fdfbf7] backface-hidden">
+                  <BookPage pageNumber={incomingPageIndex! + 1} data={incomingPage} side="right" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Progress Bar */}
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-32 sm:w-48 h-1 bg-[#2c1810]/50 rounded-full overflow-hidden backdrop-blur-sm z-40">
+          <div className="h-full bg-[#cfaa68] transition-all duration-300" style={{ width: `${progress}%` }} />
+        </div>
+      </div>
+
       <style>{`
-        @keyframes breathe {
-          0%, 100% { opacity: 0.1; transform: scale(1); }
-          50% { opacity: 0.2; transform: scale(1.05); }
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotateY-180 { transform: rotateY(180deg); }
+        
+        @keyframes book-open {
+           0% { transform: rotateX(60deg) rotateZ(-10deg) scale(0.5); }
+           100% { transform: rotateX(0deg) rotateZ(0deg) scale(1); }
         }
 
-        @keyframes gentleFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
+        @keyframes cover-open {
+           0% { transform: rotateY(0deg); }
+           100% { transform: rotateY(-180deg); }
         }
 
-        @keyframes softPulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.5; }
+        @keyframes fade-in-up {
+           0% { opacity: 0; transform: translateY(20px); }
+           100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes softFade {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
+        @keyframes flipNext {
+           0% { transform: rotateY(0deg); }
+           100% { transform: rotateY(-180deg); }
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes fadeInScale {
-          from { opacity: 0; transform: scale(0.8); }
-          to { opacity: 1; transform: scale(1); }
+        @keyframes flipPrev {
+           0% { transform: rotateY(180deg); }
+           100% { transform: rotateY(0deg); }
         }
       `}</style>
     </div>
